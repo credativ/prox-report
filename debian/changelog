@@ -1,0 +1,5 @@
+prox-report (1.0.0) stable; urgency=medium
+
+  * Initial release of prox-report package
+
+ -- Florian Paul Azim Hoberg @gyptazy <florian.hoberg@credativ.de>  Thu, 26 Mar 2026 19:54:57 +0001
