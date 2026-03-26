@@ -1,0 +1,13 @@
+Source: prox-report
+Maintainer: Florian Paul Azim Hoberg @gyptazy <florian.hoberg@credativ.de>
+Section: admin
+Priority: optional
+Standards-Version: 4.6.2
+Build-Depends: debhelper-compat (= 13), rustc, cargo
+Rules-Requires-Root: no
+
+Package: prox-report
+Architecture: amd64
+Depends: ${misc:Depends}
+Description: A support and compliance tool for Proxmox VE
+ prox-report is a support and compliance tool for Proxmox VE nodes and clusters, simplifying diagnostics, validation, and auditing to streamline support from credativ GmbH.
