@@ -26,6 +26,73 @@ For seamless integration into Proxmox environments, prox-report can be installed
 Alternatively, it can be executed from any workstation in remote mode, where it securely retrieves all required data via the Proxmox API, making it suitable for centralized administration and support scenarios.
 
 ## Installation
+### Proxmox 8.x/9.x
+For Proxmox VE as well as Debian- and Ubuntu-based systems such as Debian and Ubuntu, the recommended way to install prox-report is via the official APT repository. This allows you to receive updates automatically through your system’s package manager:
+
+```
+curl https://git.gyptazy.com/api/packages/gyptazy/debian/repository.key -o /etc/apt/keyrings/gyptazy.asc
+echo "deb [signed-by=/etc/apt/keyrings/gyptazy.asc] https://packages.gyptazy.com/api/packages/gyptazy/debian trixie main" | sudo tee -a /etc/apt/sources.list.d/gyptazy.list
+apt-get update
+apt-get install -y prox-report
+```
+
+### Linux
+The latest precompiled Linux binary of prox-report is always available on the official release page:
+* https://github.com/credativ/prox-report/releases
+
+To download the most recent version, use the asset named:
+* `prox-report-linux-latest`
+
+Alternatively, if you need a specific version (for reproducibility or compatibility reasons), you can download a versioned release such as:
+* `prox-report-linux-v1.0.0`
+
+Each release contains ready-to-use binaries, so no compilation is required. Simply download the appropriate file, make it executable if necessary, and run it on your Linux system.
+
+> [!TIP]
+> For Proxmox, Debian & Ubuntu systems use the repository!
+
+It is recommended to use the -latest variant for the most up-to-date features and fixes, unless you explicitly require a pinned version.
+
+### macOS
+The latest precompiled macOS binary of prox-report is always available on the official release page:
+* https://github.com/credativ/prox-report/releases
+
+To download the most recent version, use the asset named:
+* `prox-report-macos-latest`
+
+Alternatively, if you need a specific version (for reproducibility or compatibility reasons), you can download a versioned release such as:
+* `prox-report-macos-v1.0.0`
+
+Each release contains ready-to-use binaries, so no compilation is required. Simply download the appropriate file, make it executable if necessary, and run it on your macOS system.
+
+It is recommended to use the -latest variant for the most up-to-date features and fixes, unless you explicitly require a pinned version.
+
+> [!TIP]
+> Starting the App on macOS with Gatekeeper Security
+When running prox-report on macOS for the first time, the system may prevent the application from starting and display a warning that it “cannot be opened because it is from an unidentified developer.” This behavior is part of Apple’s Gatekeeper security mechanism, which automatically applies a quarantine attribute to files downloaded from the internet.
+
+There are two straightforward ways to resolve this. The first option is to use the graphical interface shown above. After attempting to open the binary once, macOS will block it and register the event. You can then open System Settings, navigate to Privacy & Security, and scroll down to the security section. There, a message will appear indicating that prox-report was blocked. By clicking “Allow Anyway” and confirming the subsequent prompt, you can explicitly authorize the application to run. When launching it again, macOS will present a final confirmation dialog where you can select “Open” to proceed.
+
+<img align="left" src="https://cdn.gyptazy.com/img/prox-report-macos-security.jpg"/>
+Alternatively, the quarantine attribute can be removed directly via the command line. This approach is particularly convenient for developers and automation workflows. Simply execute the following command in the directory containing the binary:
+
+```
+xattr -d com.apple.quarantine prox-report
+```
+
+### Windows
+The latest precompiled Windows binary of prox-report is always available on the official release page:
+* https://github.com/credativ/prox-report/releases
+
+To download the most recent version, use the asset named:
+* `prox-report-windows-latest`
+
+Alternatively, if you need a specific version (for reproducibility or compatibility reasons), you can download a versioned release such as:
+* `prox-report-windows-v1.0.0`
+
+Each release contains ready-to-use binaries, so no compilation is required. Simply download the appropriate file, make it executable if necessary, and run it on your Windows system.
+
+It is recommended to use the -latest variant for the most up-to-date features and fixes, unless you explicitly require a pinned version.
 
 ## Build from Source
 Building prox-report from source requires a properly configured development environment with the Rust toolchain installed. In particular, you need the Rust compiler (rustc) and the Cargo build system, which are typically installed together via the official Rust distribution. In addition, standard build tools for your operating system must be available, such as a C compiler and related system libraries, since some Rust dependencies rely on native components during compilation. Ensuring that your environment is up to date will help avoid build issues and guarantee a smooth compilation process.
