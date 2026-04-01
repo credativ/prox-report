@@ -5,7 +5,7 @@ use reqwest::blocking::Client;
 use reqwest::header::{HeaderMap, HeaderValue, AUTHORIZATION};
 use serde::{Deserialize, Serialize};
 use std::process::Command;
-use log::{info, debug, error};
+use log::{debug};
 
 #[derive(Debug, Deserialize)]
 struct Node {
