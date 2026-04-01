@@ -24,7 +24,7 @@ use validate::exec_validate;
 use clap::Parser;
 use cli::{Cli, Commands};
 use utils::write_audit;
-use log::{info, debug, error};
+use log::{info, debug};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
