@@ -17,10 +17,12 @@
 mod audit;
 mod cli;
 mod logging;
+mod merge;
 mod utils;
 mod validate;
 use audit::exec_audit;
 use validate::exec_validate;
+use merge::exec_merge_licenses;
 use clap::Parser;
 use cli::{Cli, Commands};
 use utils::write_audit;
@@ -44,6 +46,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         Some(Commands::Audit) => {
             let result = exec_audit(&cli)?;
+            write_audit(&result)?;
+        }
+
+        Some(Commands::MergeLicenses) => {
+            let result = exec_merge_licenses(&cli)?;
             write_audit(&result)?;
         }
 

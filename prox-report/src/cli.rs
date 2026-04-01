@@ -17,6 +17,9 @@ pub struct Cli {
     #[arg(short = 'r', long, env = "PROX_REPORT_REMOTE", help = "Run in remote mode (requires API credentials)")]
     pub remote: bool,
 
+    #[arg(short = 'i', long, env = "PROX_REPORT_INPUT_PATH", help = "Input directory of already present license files")]
+    pub input_path: Option<String>,
+
     #[arg(long, env = "PROX_REPORT_RHOST")]
     pub rhost: Option<String>,
 
@@ -44,6 +47,9 @@ pub enum Commands {
 
     #[command(about = "Run compliance audit checks")]
     Audit,
+
+    #[command(about = "Merge and convert license files which were obtained by the Proxmox UI")]
+    MergeLicenses,
 
     #[command(about = "Collect support bundle and diagnostics")]
     Support,
