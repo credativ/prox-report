@@ -51,17 +51,6 @@ pub struct EnrichedClusterNode {
     pub subscription: Option<Subscription>,
 }
 
-// #[derive(Debug, Serialize)]
-// pub struct EnrichedClusterNodeSubscription {
-//     pub status: Option<String>,
-//     pub level: Option<String>,
-//     pub productname: Option<String>,
-//     pub key: Option<String>,
-//     pub serverid: Option<String>,
-//     pub sockets: Option<String>,
-//     pub nextduedate: Option<String>,
-// }
-
 pub fn exec_audit(cli: &Cli) -> Result<EnrichedCluster, Box<dyn std::error::Error>> {
     debug!("→ Starting Proxmox Cluster audit...");
 
