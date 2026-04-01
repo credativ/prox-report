@@ -3,7 +3,7 @@
 use anyhow::{Result, Context};
 use chrono::Local;
 use crate::audit::EnrichedCluster;
-use log::{info, debug, error};
+use log::{debug, error};
 use std::fs::File;
 use std::io::Write;
 use std::env;

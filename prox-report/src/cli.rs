@@ -11,25 +11,25 @@ use clap::{Parser, Subcommand};
 )]
 
 pub struct Cli {
-    #[arg(short = 'l', long, help = "Default: Run in local mode (on any PVE node)")]
+    #[arg(short = 'l', long, env = "PROX_REPORT_LOCAL", help = "Default: Run in local mode (on any PVE node)")]
     pub local: bool,
 
-    #[arg(short = 'r', long, help = "Run in remote mode (requires API credentials)")]
+    #[arg(short = 'r', long, env = "PROX_REPORT_REMOTE", help = "Run in remote mode (requires API credentials)")]
     pub remote: bool,
 
-    #[arg(long)]
+    #[arg(long, env = "PROX_REPORT_RHOST")]
     pub rhost: Option<String>,
 
-    #[arg(long)]
+    #[arg(long, env = "PROX_REPORT_RTOKENID")]
     pub rtokenid: Option<String>,
 
-    #[arg(long)]
+    #[arg(long, env = "PROX_REPORT_RSECRET")]
     pub rsecret: Option<String>,
 
-    #[arg(long, default_value_t = true)]
+    #[arg(long, default_value_t = true, env = "PROX_REPORT_RINSECURE")]
     pub rinsecure: bool,
 
-    #[arg(short = 'd', long, help = "Run credaprox in debug mode")]
+    #[arg(short = 'd', long, env = "PROX_REPORT_DEBUG", help = "Run credaprox in debug mode")]
     pub debug: bool,
 
     #[command(subcommand)]

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use crate::audit::EnrichedCluster;
-use log::{info, debug, error};
+use log::{debug, error};
 
 pub fn exec_validate(cluster: &EnrichedCluster) -> Result<(), Box<dyn std::error::Error>> {
     let mut error_count = 0;

@@ -141,17 +141,17 @@ prox-report \
 ```
 
 ### Options
-The available command-line options allow you to control how prox-report is executed and how it connects to a Proxmox VE environment. By default, the tool operates in local mode, meaning it assumes it is executed directly on a Proxmox node and can access all required information without additional parameters. When running in remote mode, the corresponding connection details must be provided, including the target host and API credentials. The API token ID and secret are used to authenticate against the Proxmox API, enabling secure access to cluster data from an external system. The --rinsecure flag can be used in environments where TLS certificates are not trusted, although this should generally be avoided in production setups. For troubleshooting and development purposes, the debug flag increases verbosity and provides deeper insight into the internal execution of the tool.
+The available command-line options allow you to control how prox-report is executed and how it connects to a Proxmox VE environment. By default, the tool operates in local mode, meaning it assumes it is executed directly on a Proxmox node and can access all required information without additional parameters. When running in remote mode, the corresponding connection details must be provided, including the target host and API credentials. The API token ID and secret are used to authenticate against the Proxmox API, enabling secure access to cluster data from an external system. The --rinsecure flag can be used in environments where TLS certificates are not trusted, although this should generally be avoided in production setups. Instead of setting values on the cli, you may also use env vars. For troubleshooting and development purposes, the debug flag increases verbosity and provides deeper insight into the internal execution of the tool.
 
-| Option | Description |
-|--------|------------|
-| `-l, --local` | Run in local mode (default, on any PVE node) |
-| `-r, --remote` | Run in remote mode (requires API credentials) |
-| `--rhost <HOST>` | Remote Proxmox host |
-| `--rtokenid <TOKEN_ID>` | API token ID |
-| `--rsecret <SECRET>` | API token secret |
-| `--rinsecure` | Allow insecure TLS (default: false) |
-| `-d, --debug` | Enable debug mode |
+| Option | ENV Var | Description |
+|--------|--------|------------|
+| `-l, --local` | `PROX_REPORT_LOCAL` | Run in local mode (default, on any PVE node) |
+| `-r, --remote` | `PROX_REPORT_REMOTE` | Run in remote mode (requires API credentials) |
+| `--rhost <HOST>` | `PROX_REPORT_RHOST` | Remote Proxmox host |
+| `--rtokenid <TOKEN_ID>` | `PROX_REPORT_RTOKENID` | API token ID |
+| `--rsecret <SECRET>` | `PROX_REPORT_RSECRET` | API token secret |
+| `--rinsecure` | `PROX_REPORT_RINSECURE` | Allow insecure TLS (default: false) |
+| `-d, --debug` | `PROX_REPORT_DEBUG` | Enable debug mode |
 
 
 ### Commands
