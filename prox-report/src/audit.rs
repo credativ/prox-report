@@ -12,10 +12,15 @@ struct Node {
     node: String,
 }
 
-#[derive(Debug, Deserialize)]
-struct Subscription {
-    status: Option<String>,
-    message: Option<String>,
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Subscription {
+    pub status: Option<String>,
+    pub level: Option<String>,
+    pub productname: Option<String>,
+    pub key: Option<String>,
+    pub serverid: Option<String>,
+    pub sockets: Option<u8>,
+    pub nextduedate: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -43,8 +48,7 @@ pub struct EnrichedClusterNode {
     pub ip: Option<String>,
     pub nodeid: Option<u32>,
     pub online: Option<u8>,
-    pub subscription_status: Option<String>,
-    pub subscription_message: Option<String>,
+    pub subscription: Option<Subscription>,
 }
 
 pub fn exec_audit(cli: &Cli) -> Result<EnrichedCluster, Box<dyn std::error::Error>> {
@@ -96,8 +100,15 @@ fn exec_audit_local() -> Result<EnrichedCluster, Box<dyn std::error::Error>> {
                     ip: entry.ip,
                     nodeid: entry.nodeid,
                     online: entry.online,
-                    subscription_status: sub.and_then(|s| s.status.clone()),
-                    subscription_message: sub.and_then(|s| s.message.clone()),
+                    subscription: Some(Subscription {
+                        status: sub.and_then(|s| s.status.clone()),
+                        level: sub.and_then(|s| s.level.clone()),
+                        productname: sub.and_then(|s| s.productname.clone()),
+                        key: sub.and_then(|s| s.key.clone()),
+                        serverid: sub.and_then(|s| s.serverid.clone()),
+                        sockets: sub.and_then(|s| s.sockets.clone()),
+                        nextduedate: sub.and_then(|s| s.nextduedate.clone()),
+                    }),
                 });
             }
             _ => {}
@@ -181,8 +192,15 @@ fn exec_audit_remote(cli: &Cli) -> Result<EnrichedCluster, Box<dyn std::error::E
                     ip: entry.ip,
                     nodeid: entry.nodeid,
                     online: entry.online,
-                    subscription_status: sub.and_then(|s| s.status.clone()),
-                    subscription_message: sub.and_then(|s| s.message.clone()),
+                    subscription: Some(Subscription {
+                        status: sub.and_then(|s| s.status.clone()),
+                        level: sub.and_then(|s| s.level.clone()),
+                        productname: sub.and_then(|s| s.productname.clone()),
+                        key: sub.and_then(|s| s.key.clone()),
+                        serverid: sub.and_then(|s| s.serverid.clone()),
+                        sockets: sub.and_then(|s| s.sockets.clone()),
+                        nextduedate: sub.and_then(|s| s.nextduedate.clone()),
+                    }),
                 });
             }
             _ => {}

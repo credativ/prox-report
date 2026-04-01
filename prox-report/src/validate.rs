@@ -29,7 +29,7 @@ pub fn exec_validate(cluster: &EnrichedCluster) -> Result<(), Box<dyn std::error
         debug!("✓ All nodes are online!");
     }
 
-    let invalid_nodes: Vec<_> = cluster.nodes.iter().filter(|n| n.subscription_status.as_deref() == Some("notfound")).map(|n| n.name.clone()).collect();
+    let invalid_nodes: Vec<_> = cluster.nodes.iter().filter(|n| n.subscription.as_ref().and_then(|s| s.status.as_deref()) == Some("notfound")).map(|n| n.name.clone()).collect();
     if !invalid_nodes.is_empty() {
         error_count +=1;
         error!("✗ Nodes without subscription: {:?}", invalid_nodes);
