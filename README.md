@@ -140,6 +140,14 @@ prox-report \
   validate
 ```
 
+### Merge Licenses
+The `merge-licenses` command of prox-report is designed to consolidate individual license reports from multiple Proxmox nodes into a single, normalized output. This is particularly useful for compliance checks and for providing structured data to credativ. This command expects a directory path (specified via -i) that contains license report files exported from the Proxmox web interface. Each node in the cluster must provide its own license report, and all files must be placed together in the given directory.
+
+**Example:**
+```bash
+prox-report -d -i /PATH/TO/FILES/ merge-licenses
+```
+
 ### Options
 The available command-line options allow you to control how prox-report is executed and how it connects to a Proxmox VE environment. By default, the tool operates in local mode, meaning it assumes it is executed directly on a Proxmox node and can access all required information without additional parameters. When running in remote mode, the corresponding connection details must be provided, including the target host and API credentials. The API token ID and secret are used to authenticate against the Proxmox API, enabling secure access to cluster data from an external system. The --rinsecure flag can be used in environments where TLS certificates are not trusted, although this should generally be avoided in production setups. Instead of setting values on the cli, you may also use env vars. For troubleshooting and development purposes, the debug flag increases verbosity and provides deeper insight into the internal execution of the tool.
 
@@ -151,6 +159,7 @@ The available command-line options allow you to control how prox-report is execu
 | `--rtokenid <TOKEN_ID>` | `PROX_REPORT_RTOKENID` | API token ID |
 | `--rsecret <SECRET>` | `PROX_REPORT_RSECRET` | API token secret |
 | `--rinsecure` | `PROX_REPORT_RINSECURE` | Allow insecure TLS (default: false) |
+| `-i, --input-path` | `PROX_REPORT_INPUT_PAT` | Input directory of already present license files (convert) |
 | `-d, --debug` | `PROX_REPORT_DEBUG` | Enable debug mode |
 
 
@@ -165,6 +174,7 @@ The command structure of prox-report is designed to cover the most common operat
 |--------|------------|
 | `validate` | Validates the PVE node/cluster for basic compliance |
 | `audit` | Creates an audit license file |
+| ` merge-licenses` | Merge and convert license files which were obtained by the Proxmox UI |
 | `support` | Creates an support file |
 
 ## Community & Support
