@@ -29,7 +29,7 @@ pub struct Cli {
     #[arg(long, default_value_t = true, env = "PROX_REPORT_RINSECURE")]
     pub rinsecure: bool,
 
-    #[arg(short = 'd', long, env = "PROX_REPORT_DEBUG", help = "Run prog-report in debug mode")]
+    #[arg(short = 'd', long, env = "PROX_REPORT_DEBUG", help = "Run prox-report in debug mode")]
     pub debug: bool,
 
     #[command(subcommand)]
