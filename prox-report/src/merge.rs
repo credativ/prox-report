@@ -64,6 +64,7 @@ fn parse_subscription(content: &str) -> Subscription {
         level: None,
         productname: None,
         key: None,
+        regdate: None,
         serverid: None,
         sockets: None,
         nextduedate: None,

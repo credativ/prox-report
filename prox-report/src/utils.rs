@@ -36,44 +36,74 @@ pub fn write_audit_csv(result: &EnrichedCluster) -> Result<PathBuf> {
     let file = File::create(&path).inspect_err(|e| error!("✗ Failed to create CSV file ({}): {}", path.display(), e)).context("Failed to create CSV file")?;
     let mut wtr = Writer::from_writer(file);
 
+    // wtr.write_record(&[
+    //     "cluster_name",
+    //     "quorate",
+    //     "node_id",
+    //     "node_name",
+    //     "node_ip",
+    //     "node_nodeid",
+    //     "node_online",
+    //     "subscription_status",
+    //     "subscription_level",
+    //     "subscription_productname",
+    //     "subscription_key",
+    //     "subscription_serverid",
+    //     "subscription_sockets",
+    //     "subscription_nextduedate",
+    // ])?;
+
+    // for node in &result.nodes {
+    //     let quorate = result.quorate.map(|v| v.to_string()).unwrap_or_default();
+    //     let nodeid = node.nodeid.map(|v| v.to_string()).unwrap_or_default();
+    //     let online = node.online.map(|v| v.to_string()).unwrap_or_default();
+    //     let sub = node.subscription.as_ref();
+
+    //     wtr.write_record(&[
+    //         result.cluster_name.as_deref().unwrap_or(""),
+    //         quorate.as_str(),
+    //         node.id.as_str(),
+    //         node.name.as_str(),
+    //         node.ip.as_deref().unwrap_or(""),
+    //         nodeid.as_str(),
+    //         online.as_str(),
+    //         sub.map(|s| sub_str(&s.status)).unwrap_or(""),
+    //         sub.map(|s| sub_str(&s.level)).unwrap_or(""),
+    //         sub.map(|s| sub_str(&s.productname)).unwrap_or(""),
+    //         sub.map(|s| sub_str(&s.key)).unwrap_or(""),
+    //         sub.map(|s| sub_str(&s.serverid)).unwrap_or(""),
+    //         sub.map(|s| sub_u8(s.sockets)).unwrap_or_default().as_str(),
+    //         sub.map(|s| sub_str(&s.nextduedate)).unwrap_or(""),
+    //     ])?;
+    // }
+
     wtr.write_record(&[
-        "cluster_name",
-        "quorate",
-        "node_id",
-        "node_name",
-        "node_ip",
-        "node_nodeid",
-        "node_online",
-        "subscription_status",
-        "subscription_level",
-        "subscription_productname",
-        "subscription_key",
-        "subscription_serverid",
-        "subscription_sockets",
-        "subscription_nextduedate",
+        "id",
+        "valid_server_id",
+        "socket",
+        "hostname",
+        "clustername",
+        "expiration_date",
+        "registration_date",
+        "partner/id",
+        "sale_subscription/id",
+        "sale_order/id",
     ])?;
 
     for node in &result.nodes {
-        let quorate = result.quorate.map(|v| v.to_string()).unwrap_or_default();
-        let nodeid = node.nodeid.map(|v| v.to_string()).unwrap_or_default();
-        let online = node.online.map(|v| v.to_string()).unwrap_or_default();
         let sub = node.subscription.as_ref();
 
         wtr.write_record(&[
-            result.cluster_name.as_deref().unwrap_or(""),
-            quorate.as_str(),
-            node.id.as_str(),
-            node.name.as_str(),
-            node.ip.as_deref().unwrap_or(""),
-            nodeid.as_str(),
-            online.as_str(),
-            sub.map(|s| sub_str(&s.status)).unwrap_or(""),
-            sub.map(|s| sub_str(&s.level)).unwrap_or(""),
-            sub.map(|s| sub_str(&s.productname)).unwrap_or(""),
-            sub.map(|s| sub_str(&s.key)).unwrap_or(""),
+            "", // id
             sub.map(|s| sub_str(&s.serverid)).unwrap_or(""),
-            sub.map(|s| sub_u8(s.sockets)).unwrap_or_default().as_str(),
+            &sub.map(|s| sub_u8(s.sockets)).unwrap_or_default(),
+            node.name.as_str(),
+            result.cluster_name.as_deref().unwrap_or(""),
             sub.map(|s| sub_str(&s.nextduedate)).unwrap_or(""),
+            sub.map(|s| sub_str(&s.regdate)).unwrap_or(""),
+            "", // partner/id
+            "", // sale_subscription/id
+            "", // sale_order/id
         ])?;
     }
 
