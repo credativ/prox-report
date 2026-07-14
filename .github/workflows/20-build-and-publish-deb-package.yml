@@ -2,10 +2,10 @@ name: Build and Trigger Publish
 
 on:
   push:
-    # branches: [ main ]
-    # tags: [ 'v*' ]
+    branches: [ main ]
+    tags: [ 'v*' ]
   pull_request:
-    # branches: [ main ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -99,12 +99,12 @@ jobs:
         path: dist/*.deb
         retention-days: 1
 
-    # - name: Trigger Private Publish Workflow
-    #   # Only trigger on Push/Tag, never on Pull Request!
-    #   if: github.event_name != 'pull_request'
-    #   run: |
-    #     echo "Triggering publish workflow in proxtools-infra..."
-    #     curl -f -X POST https://api.github.com/repos/credativ/proxtools-infra/dispatches \
-    #     -H 'Accept: application/vnd.github.v3+json' \
-    #     -H 'Authorization: token ${{ secrets.INFRA_ACCESS_TOKEN }}' \
-    #     -d '{"event_type": "publish-request", "client_payload": {"repo": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "ref": "${{ github.ref }}"}}'
+    - name: Trigger Private Publish Workflow
+      # Only trigger on Push/Tag, never on Pull Request!
+      if: github.event_name != 'pull_request'
+      run: |
+        echo "Triggering publish workflow in proxtools-infra..."
+        curl -f -X POST https://api.github.com/repos/credativ/proxtools-infra/dispatches \
+        -H 'Accept: application/vnd.github.v3+json' \
+        -H 'Authorization: token ${{ secrets.INFRA_ACCESS_TOKEN }}' \
+        -d '{"event_type": "publish-request", "client_payload": {"repo": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "ref": "${{ github.ref }}"}}'
