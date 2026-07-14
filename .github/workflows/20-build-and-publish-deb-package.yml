@@ -76,7 +76,7 @@ jobs:
     - name: Extract version from Cargo.toml
       id: version
       run: |
-        VERSION=$(grep '^version' Cargo.toml | head -n1 | cut -d '"' -f2)
+        VERSION=$(grep '^version' prox-report/Cargo.toml | head -n1 | cut -d '"' -f2)
         echo "version=$VERSION" >> $GITHUB_OUTPUT
 
     - name: Build Debian package
