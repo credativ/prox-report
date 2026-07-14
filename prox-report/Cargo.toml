@@ -3,7 +3,7 @@ name = "prox-report"
 description = "A support and compliance tool for Proxmox nodes & clusters to gain credativ GmbH support."
 authors = ["Florian Paul Azim Hoberg (@gyptazy) <florian.hoberg@credativ.de>", "Dominic Brekau <dominic.brekau@credativ.de>"]
 homepage = "https://github.com/credativ/prox-report/"
-version = "1.0.0"
+version = "1.1.1"
 edition = "2021"
 license = "GPL-3.0-or-later"
 
