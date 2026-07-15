@@ -1,3 +1,16 @@
+prox-report (1.1.1) stable; urgency=medium
+
+  * First public release
+
+ -- Dominic Brekau <dominic.brekau@credativ.de>  Wed, 15 Jul 2026 15:19:09 +0200
+
+prox-report (1.1.0) stable; urgency=medium
+
+  * The subscription's registration date will now also be shown
+  * Adjusted the CSV header structure to match the expected input format
+
+ -- Florian Paul Azim Hoberg @gyptazy <florian.hoberg@credativ.de>  Thu, 26 Mar 2026 19:54:57 +0001
+
 prox-report (1.0.0) stable; urgency=medium
 
   * Initial release of prox-report package
