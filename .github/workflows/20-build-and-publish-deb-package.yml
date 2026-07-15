@@ -1,0 +1,110 @@
+name: Build and Trigger Publish
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DEBEMAIL: "ci@credativ.de"
+      DEBFULLNAME: "CI Bot"
+      DEB_VENDOR: "deb"
+      DEBCHANGE_VENDOR: "deb"
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y debhelper dh-make devscripts git-buildpackage build-essential
+
+    - name: Configure generic vendor
+      run: |
+        sudo mkdir -p /etc/dpkg/origins
+        echo "Vendor: deb" | sudo tee /etc/dpkg/origins/deb
+
+    - name: Configure Git for GBP
+      run: |
+        git config user.name "CI Bot"
+        git config user.email "ci@credativ.de"
+
+    - name: Determine Build Mode
+      id: mode
+      run: |
+        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "Build mode: STABLE"
+          echo "snapshot=false" >> $GITHUB_OUTPUT
+        else
+          echo "Build mode: SNAPSHOT"
+          echo "snapshot=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Update Changelog (Snapshot Only)
+      if: steps.mode.outputs.snapshot == 'true' && github.event_name != 'pull_request'
+      run: |
+        VERSION=$(dpkg-parsechangelog -S Version)
+        gbp dch --ignore-branch --snapshot --new-version="${VERSION}credativ1" --git-author
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y musl-tools pkg-config
+
+    - name: Install Rust (rustup)
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+        components: rustfmt
+
+    - name: Add musl target
+      run: |
+        rustup target add x86_64-unknown-linux-musl
+
+    - name: Build static binary (musl)
+      run: |
+        cd prox-report && cargo build --release --target x86_64-unknown-linux-musl
+
+    - name: Extract version from Cargo.toml
+      id: version
+      run: |
+        VERSION=$(grep '^version' prox-report/Cargo.toml | head -n1 | cut -d '"' -f2)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Build Debian package
+      run: |
+        PKG=prox-report
+        VERSION=${{ steps.version.outputs.version }}
+        ARCH=amd64
+        sudo apt-get update &&\
+        sudo apt-get -y install debhelper-compat rustc cargo &&\
+        rm -f ../*.deb ../*.changes ../*.buildinfo &&\
+        dpkg-buildpackage -us -uc -b &&\
+        mkdir -p dist &&\
+        mv ../*.deb dist/ &&\
+        echo 'OK: Debian package successfully created.'
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: debian-package
+        path: dist/*.deb
+        retention-days: 1
+
+    - name: Trigger Private Publish Workflow
+      # Only trigger on Push/Tag, never on Pull Request!
+      if: github.event_name != 'pull_request'
+      run: |
+        echo "Triggering publish workflow in proxtools-infra..."
+        curl -f -X POST https://api.github.com/repos/credativ/proxtools-infra/dispatches \
+        -H 'Accept: application/vnd.github.v3+json' \
+        -H 'Authorization: token ${{ secrets.INFRA_ACCESS_TOKEN }}' \
+        -d '{"event_type": "publish-request", "client_payload": {"repo": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "ref": "${{ github.ref }}"}}'
