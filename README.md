@@ -26,14 +26,22 @@ For seamless integration into Proxmox environments, prox-report can be installed
 Alternatively, it can be executed from any workstation in remote mode, where it securely retrieves all required data via the Proxmox API, making it suitable for centralized administration and support scenarios.
 
 ## Installation
-### Proxmox 8.x/9.x
+### Proxmox 9.x
 For Proxmox VE as well as Debian- and Ubuntu-based systems such as Debian and Ubuntu, the recommended way to install prox-report is via the official APT repository. This allows you to receive updates automatically through your system’s package manager:
 
-```
-curl https://git.gyptazy.com/api/packages/gyptazy/debian/repository.key -o /etc/apt/keyrings/gyptazy.asc
-echo "deb [signed-by=/etc/apt/keyrings/gyptazy.asc] https://packages.gyptazy.com/api/packages/gyptazy/debian trixie main" | sudo tee -a /etc/apt/sources.list.d/gyptazy.list
-apt-get update
-apt-get install -y prox-report
+```bash
+# Add GPG key
+curl -fsSL https://packages.credativ.com/public/proxtools/public.key \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/proxtools-archive-keyring.gpg
+
+# Add repository
+echo "deb [signed-by=/etc/apt/keyrings/proxtools-archive-keyring.gpg] \
+https://packages.credativ.com/public/proxtools stable main" \
+| sudo tee /etc/apt/sources.list.d/proxtools.list
+
+# Update & install
+sudo apt-get update
+sudo apt-get install prox-report
 ```
 
 ### Linux
