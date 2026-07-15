@@ -187,8 +187,5 @@ The command structure of prox-report is designed to cover the most common operat
 
 ## Community & Support
 Have questions, ideas, or need help with `prox-report`?
-There are multiple ways to get support and connect with the community.
-
-[Join the ProxTools Discord server](https://discord.gg/p9UxdMnx) for real-time discussions, help, and exchange with other users.
 
 If you found a bug, want to request a feature, or suggest an improvement, please [create](https://github.com/credativ/prox-report/issues) an issue on GitHub. Your feedback is invaluable in making `prox-report` better for everyone!
