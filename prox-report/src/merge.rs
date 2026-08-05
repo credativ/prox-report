@@ -93,6 +93,7 @@ fn parse_subscription(content: &str) -> Subscription {
                 "level" => sub.level = Some(parts[1].to_string()),
                 "productname" => sub.productname = Some(parts[1].to_string()),
                 "key" => sub.key = Some(parts[1].to_string()),
+                "regdate" => sub.regdate = Some(parts[1].split_whitespace().next().unwrap_or("").to_string()),
                 "serverid" => sub.serverid = Some(parts[1].to_string()),
                 "sockets" => sub.sockets = parts[1].parse().ok(),
                 "nextduedate" => sub.nextduedate = Some(parts[1].to_string()),

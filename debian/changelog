@@ -1,3 +1,9 @@
+prox-report (1.2.0) stable; urgency=medium
+
+  * Honor regdate field when merging license files
+
+ -- Florian Paul Azim Hoberg @gyptazy <florian.hoberg@credativ.de>  Wed, 5 Aug 2026 15:02:31 +0200
+
 prox-report (1.1.1) stable; urgency=medium
 
   * First public release
