@@ -1,5 +1,5 @@
 # Prox-Report - Support & compliance tool for Proxmox
-<img align="left" src="https://cdn.gyptazy.com/img/credativ-prox-report.jpg"/>
+<img align="left" src="https://cdn.gyptazy.com/img/prox-report-credativ.jpg"/>
 
 <br clear="left">
 
@@ -182,7 +182,7 @@ The command structure of prox-report is designed to cover the most common operat
 |--------|------------|
 | `validate` | Validates the PVE node/cluster for basic compliance |
 | `audit` | Creates an audit license file |
-| ` merge-licenses` | Merge and convert license files which were obtained by the Proxmox UI |
+| `merge-licenses` | Merge and convert license files which were obtained by the Proxmox UI |
 | `support` | Creates an support file |
 
 ## Community & Support
