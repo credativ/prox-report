@@ -78,32 +78,30 @@ pub fn write_audit_csv(result: &EnrichedCluster) -> Result<PathBuf> {
     // }
 
     wtr.write_record(&[
-        "id",
         "valid_server_id",
         "socket",
         "hostname",
         "clustername",
         "expiration_date",
         "registration_date",
-        "partner/id",
-        "sale_subscription/id",
-        "sale_order/id",
+        "partner",
+        "sale_subscription",
+        "sale_order",
     ])?;
 
     for node in &result.nodes {
         let sub = node.subscription.as_ref();
 
         wtr.write_record(&[
-            "", // id
             sub.map(|s| sub_str(&s.serverid)).unwrap_or(""),
             &sub.map(|s| sub_u8(s.sockets)).unwrap_or_default(),
             node.name.as_str(),
             result.cluster_name.as_deref().unwrap_or(""),
             sub.map(|s| sub_str(&s.nextduedate)).unwrap_or(""),
             sub.map(|s| sub_str(&s.regdate)).unwrap_or(""),
-            "", // partner/id
-            "", // sale_subscription/id
-            "", // sale_order/id
+            "", // partner
+            "", // sale_subscription
+            "", // sale_order
         ])?;
     }
 
